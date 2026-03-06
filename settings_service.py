@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import secrets
 import string
@@ -9,13 +9,13 @@ from config import AppConfig
 from db import Store
 
 
-@dataclass(slots=True, frozen=True)
+@dataclass(frozen=True)
 class SettingsChangeResult:
     restart_required: bool
     updated_keys: tuple[str, ...]
 
 
-@dataclass(slots=True, frozen=True)
+@dataclass(frozen=True)
 class AdminPasswordBootstrapResult:
     password: str
     generated: bool

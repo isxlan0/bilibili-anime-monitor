@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import logging
 import secrets
@@ -21,7 +21,7 @@ SESSION_COOKIE = "bangumi_admin_session"
 SESSION_TTL_SECONDS = 24 * 60 * 60
 
 
-@dataclass(slots=True)
+@dataclass()
 class Response:
     status: str
     headers: list[tuple[str, str]]

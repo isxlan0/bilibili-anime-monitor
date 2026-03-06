@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 from dataclasses import dataclass, field
 from typing import Any
@@ -13,7 +13,7 @@ def format_episode_label(episode_no: str, title: str) -> str:
     return f"{episode_no} {title}".strip()
 
 
-@dataclass(slots=True)
+@dataclass()
 class PollSummary:
     checked_count: int = 0
     new_episode_count: int = 0
@@ -42,7 +42,7 @@ class PollSummary:
         return f"已检查 {self.checked_count} 部番剧，暂无更新。"
 
 
-@dataclass(slots=True)
+@dataclass()
 class TestNotificationSummary:
     show_title: str
     episode_label: str

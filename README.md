@@ -16,7 +16,7 @@
 
 ## 环境要求
 
-- Python `3.10+`
+- Python `3.9+`
 - Windows：`PowerShell` 或 `CMD`
 - Linux：`bash` / `sh`
 - 可选：Telegram Bot Token、Telegram Chat ID、自定义 Webhook
@@ -107,7 +107,7 @@ cd bilibili-anime-monitor
 #### Windows PowerShell
 
 ```powershell
-py -3.10 -m venv .venv
+py -3 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
 pip install -r requirements.txt
@@ -116,7 +116,7 @@ pip install -r requirements.txt
 #### Windows CMD
 
 ```cmd
-py -3.10 -m venv .venv
+py -3 -m venv .venv
 .\.venv\Scripts\activate.bat
 python -m pip install --upgrade pip
 pip install -r requirements.txt

@@ -1,9 +1,9 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 from dataclasses import dataclass
 
 
-@dataclass(slots=True, frozen=True)
+@dataclass(frozen=True)
 class EpisodeInfo:
     episode_id: str
     episode_no: str
@@ -13,7 +13,7 @@ class EpisodeInfo:
     publish_time: str | None = None
 
 
-@dataclass(slots=True, frozen=True)
+@dataclass(frozen=True)
 class ShowSnapshot:
     season_id: str
     title: str

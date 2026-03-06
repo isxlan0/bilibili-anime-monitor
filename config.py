@@ -49,7 +49,7 @@ def _read_int(name: str, dotenv: dict[str, str], default: int, minimum: int = 1)
     return max(value, minimum)
 
 
-@dataclass(slots=True)
+@dataclass()
 class AppConfig:
     db_path: Path
     poll_interval_seconds: int
