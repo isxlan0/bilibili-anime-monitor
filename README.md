@@ -61,11 +61,19 @@ TELEGRAM_POLL_TIMEOUT_SECONDS=2
 BILIBILI_COOKIE=
 ```
 
-说明：
+各配置项说明：
 
-- `WEB_HOST` 建议本机使用时设为 `127.0.0.1`，避免直接暴露到局域网
-- `WEB_ADMIN_PASSWORD` 留空时，首次启动会自动生成一次性初始密码
-- `BILIBILI_COOKIE` 仅在访问受限番剧时需要
+- `TELEGRAM_BOT_TOKEN`：Telegram 机器人 Token，用于发送通知和接收 Bot 菜单指令
+- `TELEGRAM_CHAT_ID`：Telegram 聊天 ID，用于指定默认接收通知的聊天窗口或频道
+- `DOME_WEBHOOK_URL`：自定义 Webhook 地址；启用对应通知器后，更新会推送到这个地址
+- `WEB_ADMIN_PASSWORD`：Web 后台管理员密码；留空时，首次启动会自动生成一次性初始密码
+- `WEB_HOST`：Web 后台监听地址；本机使用建议设为 `127.0.0.1`，避免直接暴露到局域网
+- `WEB_PORT`：Web 后台监听端口，默认 `8688`
+- `DB_PATH`：SQLite 数据库文件路径，用于保存番剧、剧集、通知器状态和系统设置
+- `POLL_INTERVAL_SECONDS`：轮询 B 站番剧更新的时间间隔，单位为秒
+- `HTTP_TIMEOUT_SECONDS`：程序请求 B 站、Telegram 或 Webhook 时的 HTTP 超时时间，单位为秒
+- `TELEGRAM_POLL_TIMEOUT_SECONDS`：Telegram Bot 拉取更新的超时时间，单位为秒
+- `BILIBILI_COOKIE`：B 站 Cookie；当部分番剧接口需要登录态或访问受限时使用
 
 ## 快速开始
 
