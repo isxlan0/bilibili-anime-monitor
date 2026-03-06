@@ -17,7 +17,8 @@
 ## 环境要求
 
 - Python `3.10+`
-- Windows `PowerShell` 或 `CMD`
+- Windows：`PowerShell` 或 `CMD`
+- Linux：`bash` / `sh`
 - 可选：Telegram Bot Token、Telegram Chat ID、自定义 Webhook
 
 ## 使用 `.env` 配置
@@ -26,12 +27,22 @@
 
 先复制模板：
 
+### Windows PowerShell
+
 ```powershell
 Copy-Item .env.example .env
 ```
 
+### Windows CMD
+
 ```cmd
 copy .env.example .env
+```
+
+### Linux
+
+```bash
+cp .env.example .env
 ```
 
 `.env` 支持以下配置项：
@@ -60,12 +71,23 @@ BILIBILI_COOKIE=
 
 ### 1. 克隆仓库
 
+#### Windows PowerShell
+
 ```powershell
 git clone https://github.com/isxlan0/bilibili-anime-monitor.git
 cd bilibili-anime-monitor
 ```
 
+#### Windows CMD
+
 ```cmd
+git clone https://github.com/isxlan0/bilibili-anime-monitor.git
+cd bilibili-anime-monitor
+```
+
+#### Linux
+
+```bash
 git clone https://github.com/isxlan0/bilibili-anime-monitor.git
 cd bilibili-anime-monitor
 ```
@@ -74,12 +96,16 @@ cd bilibili-anime-monitor
 
 当前项目仅使用 Python 标准库，`requirements.txt` 主要用于统一安装入口。
 
+#### Windows PowerShell
+
 ```powershell
 py -3.10 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
+
+#### Windows CMD
 
 ```cmd
 py -3.10 -m venv .venv
@@ -88,28 +114,58 @@ python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
+#### Linux
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python3 -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
 ### 3. 配置 `.env`
+
+#### Windows PowerShell
 
 ```powershell
 Copy-Item .env.example .env
 notepad .env
 ```
 
+#### Windows CMD
+
 ```cmd
 copy .env.example .env
 notepad .env
+```
+
+#### Linux
+
+```bash
+cp .env.example .env
+nano .env
 ```
 
 如果你准备先用本机浏览器管理，建议把 `.env` 里的 `WEB_HOST` 设为 `127.0.0.1`。
 
 ### 4. 启动程序
 
+#### Windows PowerShell
+
 ```powershell
 python main.py
 ```
 
+#### Windows CMD
+
 ```cmd
 python main.py
+```
+
+#### Linux
+
+```bash
+python3 main.py
 ```
 
 如果未显式设置 `WEB_ADMIN_PASSWORD`，程序会在第一次初始化后台时自动生成随机密码，并在控制台打印一次：
@@ -144,10 +200,20 @@ python main.py
 
 ## 测试
 
+### Windows PowerShell
+
 ```powershell
 python -m unittest discover -s tests -v
 ```
 
+### Windows CMD
+
 ```cmd
 python -m unittest discover -s tests -v
+```
+
+### Linux
+
+```bash
+python3 -m unittest discover -s tests -v
 ```
