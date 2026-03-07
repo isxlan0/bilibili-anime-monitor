@@ -93,13 +93,20 @@ class TelegramNotifier(BaseNotifier):
         text = (message.get("text") or "").strip()
         command = self._extract_command(text)
         if command == "/start":
-            self.store.set_setting("telegram.chat_id", str(chat_id))
+            bound_chat_id = self._get_bound_chat_id()
+            if bound_chat_id is None:
+                self.store.set_setting("telegram.chat_id", str(chat_id))
+            elif bound_chat_id != chat_id:
+                self.pending_actions.pop(chat_id, None)
+                self.send_text("当前聊天无权操作此机器人。", chat_id=chat_id)
+                return
             self.pending_actions.pop(chat_id, None)
             self.send_text("已绑定当前聊天。使用 /menu 打开追番管理菜单。", chat_id=chat_id)
             self._send_menu(chat_id, notifier_manager)
             return
+        if not self._ensure_authorized_chat(chat_id):
+            return
         if command == "/menu":
-            self.store.set_setting("telegram.chat_id", str(chat_id))
             self.pending_actions.pop(chat_id, None)
             self._send_menu(chat_id, notifier_manager)
             return
@@ -128,7 +135,8 @@ class TelegramNotifier(BaseNotifier):
         message = callback_query.get("message") or {}
         chat = message.get("chat") or {}
         chat_id = int(chat.get("id") or callback_query.get("from", {}).get("id"))
-        self.store.set_setting("telegram.chat_id", str(chat_id))
+        if not self._ensure_authorized_chat(chat_id, callback_query_id=callback_id):
+            return
 
         if data == "menu:add_show":
             self.pending_actions[chat_id] = "awaiting_show_url"
@@ -223,3 +231,28 @@ class TelegramNotifier(BaseNotifier):
         if "@" in command:
             command = command.split("@", 1)[0]
         return command
+
+    def _get_bound_chat_id(self) -> int | None:
+        raw_chat_id = self.settings.get_telegram_chat_id()
+        if not raw_chat_id:
+            return None
+        try:
+            return int(raw_chat_id)
+        except ValueError:
+            logger.warning("telegram.chat_id 配置无效: %s", raw_chat_id)
+            return None
+
+    def _ensure_authorized_chat(self, chat_id: int, callback_query_id: str | None = None) -> bool:
+        bound_chat_id = self._get_bound_chat_id()
+        if bound_chat_id is None:
+            if callback_query_id:
+                self._answer_callback(callback_query_id, "请先发送 /start 绑定当前聊天")
+            self.send_text("请先发送 /start 绑定当前聊天。", chat_id=chat_id)
+            return False
+        if bound_chat_id != chat_id:
+            self.pending_actions.pop(chat_id, None)
+            if callback_query_id:
+                self._answer_callback(callback_query_id, "当前聊天无权操作此机器人")
+            self.send_text("当前聊天无权操作此机器人。", chat_id=chat_id)
+            return False
+        return True
